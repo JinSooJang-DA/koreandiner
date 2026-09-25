@@ -1,0 +1,15 @@
+:root {
+    --c-text: #2D2A26;
+    --c-accent: #D94838;
+    --c-background: #FDF0EE;
+    --c-white: #FFFFFF;
+
+    --font-h: 'Palanquin-dark', sans-serif;
+    --font-p: 'Palanquin', sans-serif;
+
+    --font-base: clamp(0.95rem, 0.9rem + 0.25vw, 1rem);
+    --font-lg: clamp(1.2rem, 1rem + 1vw, 1.5rem);
+    --font-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+    --font-xxl: clamp(1.8rem, 1.4rem + 1.5vw, 2.5rem);
+    --font-xxxl: clamp(2.2rem, 1.5rem + 3vw, 4rem);
+}

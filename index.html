@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imo's Korean Diner</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/icons/order.svg">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body onload="renderDishes(); renderBasket();">
+    <header class="header-content">
+        <div class="header-nav">
+            <img src="./assets/icons/logo2.svg" alt="Logo" class="header-logo">
+
+            <div class="menu-wrapper" style="position: relative; display: flex; align-items: center;">
+                <button type="button" class="btn-menu" onclick="categoryMenu()">
+                    <img id="btn-menu" src="./assets/icons/menu.svg" alt="Menu" class="header-menu-icon">
+                </button>
+
+                <nav id="nav-menu" class="nav-menu">
+                    <div class="menu-drawer-header">Menu</div>
+                    <ul class="menu-category-list">
+                        <li><a href="javascript:void(0)" onclick="goToCategory('gimbap')">Gimbap</a></li>
+                        <li><a href="javascript:void(0)" onclick="goToCategory('ramen')">Ramen & Bunsik</a></li>
+                        <li><a href="javascript:void(0)" onclick="goToCategory('rice')">Rice & Bibimbap</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="landing-img">
+        <img src="./assets/img/hero-diner-interior.webp" alt="Diner Interior" class="hero-img">
+        <div class="restaurant-badge">
+            <img src="./assets/img/badge-chef-round.webp" alt="Chef Badge">
+        </div>
+    </div>
+
+    <div class="restaurant-info">
+        <h1>
+            <span class="restaurant-name">
+                <span class="title-accent-text">Imo's</span> Korean Diner
+            </span>
+            <span class="rating-badge">
+                <span class="rating-star">★</span> 4.8 <span class="rating-count">(420)</span>
+            </span>
+        </h1>
+        <p>The best of Gimbap, Ramen, and<br class="mobile-br"> Rice bowls, all in one great place.</p>
+    </div>
+
+    <main class="content-wrapper">
+        <section class="content">
+            <!-- 1. Gimbap Section -->
+            <div id="gimbap" class="category-header">
+                <div class="category-inner">
+                    <img src="./assets/img/icon-gimbap.webp" alt="Gimbap Icon" class="chanese-logo">
+                    <h3>Gimbap</h3>
+                </div>
+            </div>
+            <div id="gimbap-list" class="menu-list"></div>
+
+            <!-- 2. Ramen & Bunsik Section -->
+            <div id="ramen" class="category-header">
+                <div class="category-inner">
+                    <img src="./assets/img/icon-ramen.webp" alt="Ramen Icon" class="chanese-logo">
+                    <h3>Ramen & Bunsik</h3>
+                </div>
+            </div>
+            <div id="ramen-list" class="menu-list"></div>
+
+            <!-- 3. Rice & Bibimbap Section -->
+            <div id="rice" class="category-header">
+                <div class="category-inner">
+                    <img src="./assets/img/icon-rice.webp" alt="Rice Icon" class="chanese-logo">
+                    <h3>Rice & Bibimbap</h3>
+                </div>
+            </div>
+            <div id="rice-list" class="menu-list"></div>
+        </section>
+
+        <!-- Basket -->
+        <aside id="basketWrapper" class="basket-wrapper">
+            <div class="basket">
+                <button type="button" class="btn-close-basket" onclick="closeMobileBasket()">&times;</button>
+                <h2>Your Basket</h2>
+                <div id="addedItems" class="addedItems"></div>
+                <div id="basketTotal"></div>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="footer-content">
+        <div class="footer-nav">
+            <span>&copy; 2026 Imo's Korean Diner</span>
+            <a href="#">Imprint</a>
+            <a href="#">Cookie Preferences</a>
+        </div>
+    </footer>
+
+    <!-- 모바일 하단 네비게이션 (768px 이하에서만 표시) -->
+    <nav class="mobile-nav">
+        <button type="button" class="mobile-nav-item" onclick="window.scrollTo(0, 0)">
+            <img src="./assets/icons/home.svg" alt="Home" class="icon-default">
+            <img src="./assets/icons/home-active.svg" alt="Home" class="icon-active">
+        </button>
+
+        <button type="button" class="mobile-nav-item">
+            <img src="./assets/icons/human.svg" alt="Profile" class="icon-default">
+            <img src="./assets/icons/human-active.svg" alt="Profile" class="icon-active">
+        </button>
+
+        <button type="button" class="mobile-nav-item">
+            <img src="./assets/icons/order.svg" alt="Orders" class="icon-default">
+            <img src="./assets/icons/order-active.svg" alt="Orders" class="icon-active">
+        </button>
+
+        <button type="button" class="mobile-nav-item cart-nav-btn" onclick="openMobileBasket()">
+            <img src="./assets/icons/cart.svg" alt="Basket" class="icon-default">
+            <img src="./assets/icons/cart-active.svg" alt="Basket" class="icon-active">
+            <img src="./assets/icons/cart-added.svg" alt="Basket" class="icon-has-items">
+            <span id="mobileCartCount" class="mobile-cart-badge d-none">0</span>
+        </button>
+    </nav>
+
+    <!-- 주문 완료 오버레이 -->
+    <div id="orderOverlay" class="order-overlay d-none">
+        <div class="order-modal">
+            <button type="button" class="btn-close-modal" onclick="closeOrderOverlay()">&times;</button>
+            <div class="order-modal-icon">
+                <img src="./assets/img/car.png" alt="Delivery Car">
+            </div>
+            <h3>Order confirmed!</h3>
+            <p>Your food is on the way!</p>
+        </div>
+    </div>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/template.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
