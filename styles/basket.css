@@ -84,9 +84,9 @@
 .addedItems {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 16px;
-    max-height: 330px;
+    gap: 8px;
+    margin-top: 12px;
+    max-height: 420px;
     overflow-y: auto;
 }
 
@@ -97,11 +97,12 @@
 .basket-item {
     background-color: var(--c-background);
     color: var(--c-text);
-    padding: 12px 16px;
-    border-radius: 14px;
+    padding: 8px 14px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
+    box-sizing: border-box;
 }
 
 .basket-item-header, .basket-item-bottom {
@@ -113,6 +114,7 @@
 .basket-item-title, .basket-item-price, .item-amount-num {
     font-size: var(--font-lg);
     font-weight: 700;
+    line-height: 1.6;
 }
 
 .btn-trash-top, .btn-control-trash, .btn-control-text {
