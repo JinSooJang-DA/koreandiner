@@ -139,8 +139,8 @@
 }
 
 .restaurant-badge img {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     object-fit: contain;
     background-color: var(--c-white);
     border-radius: 50%;

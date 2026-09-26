@@ -208,7 +208,7 @@
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100vh;
+        height: 100dvh;
         margin: 0;
         padding: 0 16px 80px 16px;
         box-sizing: border-box;
@@ -229,7 +229,7 @@
         width: 100%;
         max-width: 100%;
         height: auto;
-        max-height: 84vh;
+        max-height: 84dvh;
         margin: 0;
         border-radius: 24px;
         border: none;
