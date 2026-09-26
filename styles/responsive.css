@@ -263,12 +263,12 @@
     }
 
     .empty-basket-container {
-        gap: 16px;       /* 데스크톱의 48px에서 16px로 대폭 축소 */
-        padding: 20px 0; /* 위아래 여백을 슬림하게 */
+        gap: 16px;    
+        padding: 20px 0; 
     }
 
     .empty-basket-container img {
-        width: 80px;     /* 빈 바스켓 아이콘 크기가 크다면 적절히 축소 */
+        width: 80px;  
         height: auto;
     }
 
