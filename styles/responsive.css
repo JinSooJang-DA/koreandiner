@@ -98,6 +98,7 @@
         left: 0;
         width: 100%;
         position: relative;
+        scroll-margin-top: 32px;
     }
 
     .category-inner {
@@ -109,17 +110,17 @@
 
     .chanese-logo {
         position: absolute;
-        top: -36px;
+        top: -32px;
         left: 50%;
         transform: translateX(-50%);
-        height: 48px;
-        width: 48px;
+        height: 56px;
+        width: 56px;
         bottom: auto;
     }
 
     .category-header h3 {
         font-size: var(--font-xxl);
-        font-weight: 400;
+        font-weight: 500;
         text-align: center;
         margin-top: 8px;
     }
