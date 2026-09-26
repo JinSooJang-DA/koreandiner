@@ -161,16 +161,16 @@
     }
 
     .desktop-price {
-        display: none; 
+        display: none;
     }
 
     .mobile-price {
-        display: block; 
+        display: block;
     }
 
     .menu-card-footer {
-        justify-content: space-between; 
-        margin-top: 12px; 
+        justify-content: space-between;
+        margin-top: 12px;
     }
 
     .footer-content {
@@ -189,11 +189,11 @@
     }
 
     .footer-nav a:first-of-type {
-        order: 1; 
+        order: 1;
     }
 
     .footer-nav a:last-of-type {
-        order: 2; 
+        order: 2;
     }
 
     .footer-nav span {
@@ -201,7 +201,6 @@
         margin-top: 2px;
     }
 
-    /* 바스켓 모바일 최적화 (높이 압축 및 3개 노출) */
     .basket-wrapper {
         display: flex;
         position: fixed;
@@ -229,11 +228,12 @@
         width: 100%;
         max-width: 100%;
         height: auto;
-        max-height: 84dvh;
+        min-height: 76dvh;
+        max-height: 88dvh;
         margin: 0;
         border-radius: 24px;
         border: none;
-        padding: 18px 16px 16px;
+        padding: 28px 20px 24px;
         transform: translateY(150%);
         transition: transform 0.5s ease-out;
         position: relative;
@@ -244,88 +244,114 @@
     }
 
     .basket h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
+        font-size: var(--font-xxl);
+        font-weight: 500;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
     .addedItems {
-        max-height: 250px;
+        max-height: 260px;
         flex: 1 1 auto;
         min-height: 0;
-        gap: 8px;
-        margin-top: 8px;
-        padding-right: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 16px;
+        padding-right: 6px;
     }
 
     .basket-item {
-        padding: 8px 12px;
-        gap: 4px;
-        border-radius: 10px;
+        background-color: var(--c-background);
+        color: var(--c-text);
+        padding: 12px 16px;
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex-shrink: 0;
     }
 
     .basket-item-title,
     .basket-item-price,
     .item-amount-num {
-        font-size: 15px;
+        font-size: var(--font-lg);
+        font-weight: 700;
+        line-height: 1.15;
     }
 
     .btn-trash-top {
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
     }
 
     .btn-control-trash {
-        width: 18px;
-        height: 18px;
-    }
-
-    .delivery-switch-container {
-        margin: 10px 4px 0 4px;
-        padding: 3px;
+        width: 20px;
+        height: 20px;
     }
 
     .btn-control-icon {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .btn-control-text {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        font-size: var(--font-lg);
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .delivery-switch-container {
+        margin: 12px 12px 0 12px;
+        padding: 4px;
     }
 
     .switch-btn {
-        padding: 5px 0;
-        font-size: 12px;
-    }
-
-    .basket-total-wrapper {
-        gap: 6px;
-        padding-top: 10px;
-    }
-
-    .total-row {
+        padding: 6px 0;
         font-size: 13px;
     }
 
+    .basket-total-wrapper {
+        margin-top: auto;
+        gap: 10px;
+        padding: 16px 12px 0 12px;
+    }
+
+    .total-row {
+        font-size: var(--font-base);
+    }
+
     .total-divider {
-        margin: 4px 0;
+        height: 2px;
+        margin: 6px 0;
     }
 
     .total-row.total-bold {
-        font-size: 18px;
+        font-size: var(--font-xl);
     }
 
     .btn-buy-now {
-        margin-top: 10px;
-        padding: 10px;
-        font-size: 16px;
+        margin-top: 14px;
+        padding: 8px;
+        font-size: var(--font-xl);
     }
 
     .btn-close-basket {
         display: block;
         position: absolute;
-        top: 16px;
-        right: 18px;
+        top: 18px;
+        right: 20px;
         background: transparent;
         border: none;
         color: var(--c-background);
-        font-size: 26px;
+        font-size: 28px;
         line-height: 1;
         cursor: pointer;
         z-index: 10;
