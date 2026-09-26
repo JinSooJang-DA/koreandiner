@@ -117,13 +117,24 @@
     line-height: 1.6;
 }
 
-.btn-trash-top, .btn-control-trash, .btn-control-text {
+.btn-trash-top, .btn-control-trash {
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.btn-trash-top:hover, .btn-control-trash:hover, .btn-control-text:hover {
+.btn-trash-top:hover, .btn-control-trash:hover {
     opacity: 0.5;
+}
+
+.btn-control-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.btn-control-icon:hover {
+    opacity: 0.6;
 }
 
 .basket-item-controls {

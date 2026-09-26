@@ -49,26 +49,14 @@ function getBasketItemTemplate(item, itemTotalPrice, i) {
     let trashHeaderHTML = '';
     if (!isSingle) {
         trashHeaderHTML = `
-            <img src="./assets/icons/trash.svg" 
-                 alt="Delete" 
-                 class="btn-trash-top" 
-                 onclick="deleteBasketItem(${i})">
+            <img src="./assets/icons/trash.svg" alt="Delete" class="btn-trash-top" onclick="deleteBasketItem(${i})">
         `;
     }
 
-    let controlLeftHTML = '';
-    if (isSingle) {
-        controlLeftHTML = `
-            <img src="./assets/icons/trash.svg" 
-                 alt="Delete" 
-                 class="btn-control-trash" 
-                 onclick="deleteBasketItem(${i})">
-        `;
-    } else {
-        controlLeftHTML = `
-            <span class="btn-control-text" onclick="decreaseAmount(${i})">-</span>
-        `;
-    }
+    // 아이템이 1개일 때는 휴지통 아이콘, 2개 이상일 때는 마이너스 아이콘
+    let controlLeftHTML = isSingle 
+        ? `<img src="./assets/icons/trash.svg" alt="Delete" class="btn-control-trash" onclick="deleteBasketItem(${i})">`
+        : `<img src="./assets/icons/minus.svg" alt="Decrease" class="btn-control-icon" onclick="decreaseAmount(${i})">`;
 
     return `
         <div class="basket-item">
@@ -81,7 +69,7 @@ function getBasketItemTemplate(item, itemTotalPrice, i) {
                 <div class="basket-item-controls">
                     ${controlLeftHTML}
                     <span class="item-amount-num">${item.amount}</span>
-                    <span class="btn-control-text" onclick="increaseAmount(${i})">+</span>
+                    <img src="./assets/icons/plus.svg" alt="Increase" class="btn-control-icon" onclick="increaseAmount(${i})">
                 </div>
                 <span class="basket-item-price">${itemTotalPrice.toFixed(2).replace('.', ',')}€</span>
             </div>
