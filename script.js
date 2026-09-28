@@ -1,32 +1,56 @@
 let basket = [];
-let overlayTimeout; // 초기값 null 불필요
+let overlayTimeout;
+let isDelivery = true;
 
-// 1. 메뉴 렌더링
 function renderDishes() {
-    document.getElementById('gimbap-list').innerHTML = '';
-    document.getElementById('ramen-list').innerHTML = '';
-    document.getElementById('rice-list').innerHTML = '';
+    clearDishContainers();
 
     for (let i = 0; i < myDishes.length; i++) {
         let dish = myDishes[i];
-        let html = getMenuCardTemplate(dish, i);
+        let basketItem = getBasketItem(dish.name);
+        let buttonText = basketItem ? `Added ${basketItem.amount}` : 'Add to basket';
+        let buttonClass = basketItem ? 'btn-add-basket is-added' : 'btn-add-basket';
+        let html = getMenuCardTemplate(dish, i, buttonText, buttonClass);
 
-        if (dish.category === "gimbap") {
-            document.getElementById('gimbap-list').innerHTML += html;
-        } else if (dish.category === "ramen") {
-            document.getElementById('ramen-list').innerHTML += html;
-        } else if (dish.category === "rice") {
-            document.getElementById('rice-list').innerHTML += html;
-        }
+        insertDishByCategory(dish.category, html);
     }
 }
 
-// 2. 장바구니 조작
+function clearDishContainers() {
+    document.getElementById('gimbap-list').innerHTML = '';
+    document.getElementById('ramen-list').innerHTML = '';
+    document.getElementById('rice-list').innerHTML = '';
+}
+
+function insertDishByCategory(category, html) {
+    let containerMap = {
+        gimbap: 'gimbap-list',
+        ramen: 'ramen-list',
+        rice: 'rice-list'
+    };
+    let containerId = containerMap[category];
+    if (containerId) {
+        document.getElementById(containerId).innerHTML += html;
+    }
+}
+
+function getBasketItem(menuItemName) {
+    for (let i = 0; i < basket.length; i++) {
+        if (basket[i].name === menuItemName) {
+            return basket[i];
+        }
+    }
+    return null;
+}
+
 function addToBasket(index) {
     let dish = myDishes[index];
+    let itemIndex = -1;
+    let basketItem;
+    let btn;
+
     document.getElementById('basketWrapper').classList.remove('d-none');
 
-    let itemIndex = -1;
     for (let i = 0; i < basket.length; i++) {
         if (basket[i].name === dish.name) {
             itemIndex = i;
@@ -41,9 +65,9 @@ function addToBasket(index) {
     }
 
     renderBasket();
-    
-    let basketItem = getBasketItem(dish.name);
-    let btn = document.getElementById(`menu-btn-${index}`);
+
+    basketItem = getBasketItem(dish.name);
+    btn = document.getElementById(`menu-btn-${index}`);
     btn.classList.add('is-added');
     btn.innerText = `Added ${basketItem.amount}`;
 }
@@ -70,9 +94,6 @@ function increaseAmount(index) {
     renderDishes();
 }
 
-// 3. 장바구니 렌더링
-let isDelivery = true; 
-
 function toggleDeliveryOption(delivery) {
     isDelivery = delivery;
     renderBasket();
@@ -91,39 +112,65 @@ function renderBasket() {
 function showEmptyBasket() {
     document.querySelector('.basket').classList.add('is-empty');
     document.getElementById('basketTotal').innerHTML = '';
-    document.getElementById('addedItems').innerHTML = `
-        <div class="empty-basket-container">
-            <p class="empty-basket-text">Nothing here yet.<br>Go ahead and choose something delicious!</p>
-            <div class="empty-basket-icon"><img src="./assets/icons/cart-big.svg" alt="Empty cart"></div>
-        </div>
-    `;
+    document.getElementById('addedItems').innerHTML = getEmptyBasketTemplate();
 }
 
 function showBasketItems() {
-    document.querySelector('.basket').classList.remove('is-empty');
     let itemsHTML = '';
+
+    document.querySelector('.basket').classList.remove('is-empty');
+
     for (let i = 0; i < basket.length; i++) {
         let item = basket[i];
         let itemTotalPrice = item.price * item.amount;
-        itemsHTML += getBasketItemTemplate(item, itemTotalPrice, i);
+        let isSingle = item.amount === 1;
+
+        let trashHeaderHTML = !isSingle
+            ? `<img src="./assets/icons/trash.svg" alt="Delete" class="btn-trash-top" onclick="deleteBasketItem(${i})">`
+            : '';
+
+        let controlLeftHTML = isSingle
+            ? `<img src="./assets/icons/trash.svg" alt="Delete" class="btn-control-trash" onclick="deleteBasketItem(${i})">`
+            : `<img src="./assets/icons/minus.svg" alt="Decrease" class="btn-control-icon" onclick="decreaseAmount(${i})">`;
+
+        itemsHTML += getBasketItemTemplate(item, itemTotalPrice, i, trashHeaderHTML, controlLeftHTML);
     }
+
     document.getElementById('addedItems').innerHTML = itemsHTML;
 }
 
 function showReceipt() {
     let subtotal = 0;
+    let deliveryFee = 4.99;
+    let finalDeliveryFee;
+    let total;
+    let activeDeliveryClass;
+    let activePickupClass;
+    let deliveryRowHTML;
+
     for (let i = 0; i < basket.length; i++) {
         subtotal += basket[i].price * basket[i].amount;
     }
 
-    let deliveryFee = 4.99;
-    let finalDeliveryFee = isDelivery ? deliveryFee : 0;
-    let total = subtotal + finalDeliveryFee;
+    finalDeliveryFee = isDelivery ? deliveryFee : 0;
+    total = subtotal + finalDeliveryFee;
 
-    document.getElementById('basketTotal').innerHTML = getBasketTotalTemplate(subtotal, deliveryFee, total);
+    activeDeliveryClass = isDelivery ? 'switch-btn active' : 'switch-btn';
+    activePickupClass = !isDelivery ? 'switch-btn active' : 'switch-btn';
+
+    deliveryRowHTML = isDelivery
+        ? `<span>${deliveryFee.toFixed(2).replace('.', ',')}€</span>`
+        : `<span class="discount-text">- ${deliveryFee.toFixed(2).replace('.', ',')}€ (Pickup)</span>`;
+
+    document.getElementById('basketTotal').innerHTML = getBasketTotalTemplate(
+        subtotal,
+        deliveryRowHTML,
+        total,
+        activeDeliveryClass,
+        activePickupClass
+    );
 }
 
-// 4. 모달 및 모바일 동작
 function checkoutOrder() {
     basket = [];
     renderBasket();
@@ -132,7 +179,7 @@ function checkoutOrder() {
     if (window.innerWidth > 768) {
         document.getElementById('basketWrapper').classList.add('d-none');
     } else {
-        closeMobileBasket(); 
+        closeMobileBasket();
     }
 
     document.getElementById('orderOverlay').classList.remove('d-none');
@@ -166,7 +213,7 @@ function updateMobileCartBadge() {
     let badge = document.getElementById('mobileCartCount');
     let cartBtn = document.querySelector('.cart-nav-btn');
     let totalCount = 0;
-    
+
     for (let i = 0; i < basket.length; i++) {
         totalCount += basket[i].amount;
     }
@@ -181,13 +228,6 @@ function updateMobileCartBadge() {
     }
 }
 
-window.addEventListener('resize', function() {
-    if (window.innerWidth > 768) {
-        document.body.style.overflow = ''; 
-        document.getElementById('basketWrapper').classList.remove('is-open');
-    }
-});
-
 function categoryMenu() {
     document.getElementById('nav-menu').classList.toggle('is-open');
 }
@@ -196,3 +236,10 @@ function goToCategory(categoryId) {
     categoryMenu();
     document.getElementById(categoryId).scrollIntoView({ behavior: 'smooth' });
 }
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+        document.body.style.overflow = '';
+        document.getElementById('basketWrapper').classList.remove('is-open');
+    }
+});

@@ -39,6 +39,7 @@
     }
 
     .hero-img {
+        content: url('../assets/img/hero-diner-small.webp');
         height: 300px;
         border-radius: 16px;
         display: block;

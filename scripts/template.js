@@ -1,23 +1,13 @@
-function getBasketItem(menuItemName) {
-    for (let i = 0; i < basket.length; i++) {
-        if (basket[i].name === menuItemName) {
-            return basket[i];
-        }
-    }
-    return null;
+function getEmptyBasketTemplate() {
+    return `
+        <div class="empty-basket-container">
+            <p class="empty-basket-text">Nothing here yet.<br>Go ahead and choose something delicious!</p>
+            <div class="empty-basket-icon"><img src="./assets/icons/cart-big.svg" alt="Empty cart"></div>
+        </div>
+    `;
 }
 
-function getMenuCardTemplate(menuItem, i) {
-    const basketItem = getBasketItem(menuItem.name);
-
-    let buttonText = 'Add to basket';
-    let buttonClass = 'btn-add-basket';
-
-    if (basketItem) {
-        buttonText = 'Added ' + basketItem.amount;
-        buttonClass = 'btn-add-basket is-added';
-    }
-
+function getMenuCardTemplate(menuItem, i, buttonText, buttonClass) {
     return `
     <article class="menu-card">
         <picture>
@@ -43,21 +33,7 @@ function getMenuCardTemplate(menuItem, i) {
     `;
 }
 
-function getBasketItemTemplate(item, itemTotalPrice, i) {
-    const isSingle = item.amount === 1;
-
-    let trashHeaderHTML = '';
-    if (!isSingle) {
-        trashHeaderHTML = `
-            <img src="./assets/icons/trash.svg" alt="Delete" class="btn-trash-top" onclick="deleteBasketItem(${i})">
-        `;
-    }
-
-    // 아이템이 1개일 때는 휴지통 아이콘, 2개 이상일 때는 마이너스 아이콘
-    let controlLeftHTML = isSingle 
-        ? `<img src="./assets/icons/trash.svg" alt="Delete" class="btn-control-trash" onclick="deleteBasketItem(${i})">`
-        : `<img src="./assets/icons/minus.svg" alt="Decrease" class="btn-control-icon" onclick="decreaseAmount(${i})">`;
-
+function getBasketItemTemplate(item, itemTotalPrice, i, trashHeaderHTML, controlLeftHTML) {
     return `
         <div class="basket-item">
             <div class="basket-item-header">
@@ -77,14 +53,7 @@ function getBasketItemTemplate(item, itemTotalPrice, i) {
     `;
 }
 
-function getBasketTotalTemplate(subtotal, deliveryFee, total) {
-    const activeDeliveryClass = isDelivery ? 'switch-btn active' : 'switch-btn';
-    const activePickupClass = !isDelivery ? 'switch-btn active' : 'switch-btn';
-    
-    const deliveryRowHTML = isDelivery 
-        ? `<span>${deliveryFee.toFixed(2).replace('.', ',')}€</span>` 
-        : `<span class="discount-text">- ${deliveryFee.toFixed(2).replace('.', ',')}€ (Pickup)</span>`;
-
+function getBasketTotalTemplate(subtotal, deliveryRowHTML, total, activeDeliveryClass, activePickupClass) {
     return `
         <div class="delivery-switch-container">
             <button type="button" class="${activeDeliveryClass}" onclick="toggleDeliveryOption(true)">Delivery</button>
